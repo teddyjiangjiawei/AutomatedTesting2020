@@ -32,18 +32,16 @@ public class MakeGraph {
         chaCG = new CHACallGraph(cha);
         chaCG.init(eps);
 
-        for (IClass iClass : cha) {
-            if(iClass.toString().contains("Application"))
-                System.out.println(iClass);
-
-        }System.out.println();
-        String stats = CallGraphStats.getStats(chaCG);
-        System.out.println(stats);
-
+//        for (IClass iClass : cha) {
+//            if(iClass.toString().contains("Application"))
+//                System.out.println(iClass);
+//
+//        }System.out.println();
+//        String stats = CallGraphStats.getStats(chaCG);
+//        System.out.println(stats);
 
         Graph classGraph=new Graph(0);
         Graph methodGraph=new Graph(1);
-
         classMethodPairs=new ArrayList<ClassMethodPair>();
 
         for(CGNode node:chaCG){
@@ -58,7 +56,7 @@ public class MakeGraph {
                     String classInnerName=method.getDeclaringClass().getName().toString();
                     //获取方法签名
                     String signature =method.getSignature();
-                    System.out.println(classInnerName+" "+signature);
+                    //System.out.println(classInnerName+" "+signature);
 
                     //判断方法是否是一个测试用例
                     if(isTestMethod(method)){
@@ -71,7 +69,7 @@ public class MakeGraph {
                         CGNode node1=iterator.next();
                         String node1_classInnerName=node1.getMethod().getDeclaringClass().getName().toString();
                         String node1_signature=node1.getMethod().getSignature();
-                        if(!(node1_classInnerName.startsWith("Ljava")||node1_classInnerName.startsWith("Ljavax"))){
+                        if(!(node1_classInnerName.startsWith("Ljava"))){
                             classGraph.addNodes(classInnerName,node1_classInnerName);
                             methodGraph.addNodes(signature,node1_signature);
                         }
@@ -83,7 +81,8 @@ public class MakeGraph {
             }
         }
         //画图
-        draw(classGraph,methodGraph);
+        classGraph.makeDotFile("classDraw.dot","class");
+        methodGraph.makeDotFile("methodDraw.dot","method");
         ArrayList<Object> result=new ArrayList<Object>();
         result.add(classGraph);
         result.add(methodGraph);
@@ -103,8 +102,4 @@ public class MakeGraph {
         return flag;
     }
 
-    private static void draw(Graph classGraph, Graph methodGraph) throws IOException {
-        classGraph.makeDotFile();
-        methodGraph.makeDotFile();
-    }
 }

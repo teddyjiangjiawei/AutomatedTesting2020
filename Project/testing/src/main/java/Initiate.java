@@ -21,16 +21,12 @@ public class Initiate {
         String type=args[0];//-c:类级，-m:方法级
         String path=args[1];//target文件的路径
         String changeInfoPath=args[2];//变更信息的路径
-
-//        type="-c";
-//        path="C:\\Users\\asus\\Desktop\\自动化测试\\大作业\\AutomatedTesting2020\\Data\\0-CMD\\target";
-//        changeInfoPath="C:\\Users\\asus\\Desktop\\自动化测试\\大作业\\AutomatedTesting2020\\Data\\0-CMD\\data\\change_info.txt";
-
-        System.out.println(type);
-        System.out.println(path);
-        System.out.println(changeInfoPath);
+//        System.out.println(type);
+//        System.out.println(path);
+//        System.out.println(changeInfoPath);
 
         //生成分析域
+
         File exclusion=new FileProvider().getFile("exclusion.txt");
         ClassLoader classLoader=Initiate.class.getClassLoader();//获得Initiate这个对象的加载器
         //该方法能够返回一个只包含Java原生类的分析域，并排除一些不常用的原生类（如： sun.awt.* ）
